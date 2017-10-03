@@ -3,7 +3,7 @@ import Perlin
 import math
 from PIL import Image
 
-noise = Perlin.Perlin()
+noise = Perlin.Perlin(500)
 img = Image.new('L', (1000, 1000), 255)
 data = img.load()
 for x in range(1000):

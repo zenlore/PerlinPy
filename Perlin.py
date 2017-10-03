@@ -22,7 +22,7 @@ def fade(t):
 
 class Perlin:
 
-	def __init__(self):
+	def __init__(self, grid):
 		self.seed = [151,160,137,91,90,15,
 		131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
 		190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
@@ -37,15 +37,18 @@ class Perlin:
 		49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127,4,150,254,
 		138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180]
 
+		self.grid = grid
+
 	def hash(self, x, y):
 		return self.seed[(self.seed[x % 256] + y) % 256]
 
 	def getGradient(self, x, y):
 		return gradientVectors[self.hash(x, y) % 8]
 
+	#Returns a value between 0.0 and 1.0
 	def genNoise(self, x, y):
 		#print("------------")
-		dim = 100
+		dim = self.grid
 		blockX = math.floor(x / dim)
 		blockY = math.floor(y / dim)
 		x = (x % dim) / float(dim)
