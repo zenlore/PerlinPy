@@ -1,6 +1,5 @@
 
 import math
-from PIL import Image
 
 class vec2:
 
@@ -63,14 +62,3 @@ class Perlin:
 		#print(dot1, dot2, dot3, dot4)
 
 		return ( lerp(lerp(dot3, dot4, fade(x)), lerp(dot2, dot1, fade(x)), fade(y)) + 1  / 2 )
-
-
-noise = Perlin()
-img = Image.new('L', (1000, 1000), 255)
-data = img.load()
-for x in range(1000):
-	for y in range(1000):
-		#print(x, y, math.floor((noise.genNoise(x, y) + 1) * 128))
-		data[x,y] = (math.floor((noise.genNoise(x, y)) * 255),)
-img.save('image.png', "PNG")
-print("DONE")
