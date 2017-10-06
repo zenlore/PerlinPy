@@ -47,21 +47,19 @@ class Perlin:
 
 	#Returns a value between 0.0 and 1.0
 	def genNoise(self, x, y):
-		#print("------------")
 		dim = self.grid
-		blockX = math.floor(x / dim)
+
+		blockX = math.floor(x / dim) #calculates local grid points
 		blockY = math.floor(y / dim)
-		x = (x % dim) / float(dim)
+
+		x = (x % dim) / float(dim) #normalize x and y to these grid points
 		y = (y % dim) / float(dim)
-		#print(x, y)
 
-		#x = fade(x)
-		#y = fade(y)
-
+		#calculate all the necessary dot products
 		dot1 = vec2(x, y).dot(self.getGradient(blockX, blockY))
 		dot2 = vec2(x - 1, y).dot(self.getGradient(blockX + 1, blockY))
 		dot3 = vec2(x - 1, y - 1).dot(self.getGradient(blockX + 1, blockY + 1))
 		dot4 = vec2(x, y - 1).dot(self.getGradient(blockX, blockY + 1))
-		#print(dot1, dot2, dot3, dot4)
 
-		return ( lerp(lerp(dot3, dot4, fade(x)), lerp(dot2, dot1, fade(x)), fade(y)) + 1  / 2 )
+		#lerp the results, add 1 and divide by 2 to adjust range
+		return (lerp(lerp(dot3, dot4, fade(x)), lerp(dot2, dot1, fade(x)), fade(y)) + 1) / 2
