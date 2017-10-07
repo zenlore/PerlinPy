@@ -52,7 +52,11 @@ class Perlin:
 
 	#Returns a value between 0.0 and 1.0
 	def genNoise(self, x, y):
-		dim = self.grid
+		return self.noise(x, y, self.grid)
+		
+	#Returns a value between 0.0 and 1.0
+	def noise(self, x, y, grid):
+		dim = grid
 
 		blockX = math.floor(x / dim) #calculates local grid points
 		blockY = math.floor(y / dim)
@@ -68,3 +72,16 @@ class Perlin:
 
 		#lerp the results, add 1 and divide by 2 to adjust range
 		return (lerp(lerp(dot3, dot4, fade(x)), lerp(dot2, dot1, fade(x)), fade(y)) + 1) / 2
+
+	def octave(self, x, y, octaves, persistence):
+		total = 0
+		grid = self.grid
+		amplitude = 1
+		maxValue = 0
+		for i in range(1, octaves + 1):
+			total += self.noise(x, y, grid) * amplitude
+			maxValue += amplitude
+
+			grid /= 2
+			amplitude *= persistence
+		return total / maxValue
